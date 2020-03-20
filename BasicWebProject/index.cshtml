@@ -1,0 +1,76 @@
+﻿<!DOCTYPE HTML>
+@using System.Data;
+@using BasicWebProject.App_Code 
+
+@{
+    Songmethods playlist = new Songmethods();
+    string filepath = "~/App_Data/Playlist.xml";
+    DataSet ds = playlist.GetAllSongs(filepath);
+    Session["Songmethods"] = playlist;
+    Session["file"] = filepath;
+}
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<div class="page-header">
+    <h1>Playlist  <small> create,make,delete</small></h1>
+</div>
+<nav class="navbar navbar-inverse">
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+</nav>
+<body>
+
+
+    <div class="container">
+        <table class="table">
+
+            @foreach (DataRow row in ds.Tables["song"].Rows)
+            {
+                <tr>
+                    <td>@row["id"]</td>
+                    <td>@row["titel"]</td>
+                    <td>@row["artist"]</td>
+                    <td>
+                        <audio controls>
+                             <source src="" type="audio/ogg">
+                             <source src="" type="audio/mpeg">
+                             Your browser does not support the audio element.
+                        </audio>
+                    </td>
+                    <td><a href="~/pages/Delete.cshtml?id=@row["id"]">delete <i class="fa fa-trash"></i></a></td>
+                </tr>
+            }
+        </table>
+        <br /><br />
+        <a href="~/pages/CreateSong.cshtml">nieuwe song toevoegen</a>
+    </div>
+    <script>
+          //  var idDelete = 0;
+           // function deleteSong(id) {
+              //  idDelete = id;
+            //    document.getElementById('deleteID').style.display = block;
+          //  }
+    </script>
+    <form method="post" accept="">
+        <input name="id" id="DeleteID" type="hidden" />
+        <input type="submit" />
+    </form>
+    @if (IsPost)
+    {
+        // playlist.DeleteSong(Request.Form['id']);
+    }
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

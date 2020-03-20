@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+@using System.Data;
+
+@using BasicWebProject.App_Code ;
+
+
+@{
+    Songmethods songMth = Session["Songmethods"] as Songmethods;
+    string file = Session["file"] as string;
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <form method="post" action="#" enctype="multipart/form-data">
+        <div>Enter nieuw song</div>
+
+        <ul>
+            <li>ID: <input id="id" name="id" type="text"> </li>
+            <li>Artiest: <input id="artist" name="artist" type="text"></li>
+            <li>Titel: <input id="titel" name="titel" type="text"></li>
+            <li>File: <input type="file" name="fileupload"></li>
+        </ul>
+        <input type="submit" value="Save" name="Save" />
+    </form>
+    @if (IsPost)
+    {
+        DataRow dr = songMth.GetEmptyDataRow();
+
+        dr["id"] = Request.Form["id"];
+        dr["artist"] = Request.Form["artist"];
+        dr["titel"] = Request.Form["titel"];
+       /// HttpPostedFileBase currentFile = Request.Filename;
+       // dr["filename"] = currentFile.Filename;
+
+        songMth.CreateSong(dr, file);
+        Response.Redirect(@"~/index.cshtml");
+    }
+</body>
+</html>

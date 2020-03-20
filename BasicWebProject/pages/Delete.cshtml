@@ -1,0 +1,38 @@
+﻿@using System.Data
+@using BasicWebProject.App_Code ;
+
+public void DeleteSong(string id, string file)
+{
+DataRow[]
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    
+        @{
+            Songmethods songMth = Session["Songmethods"] as Songmethods;
+            string file = Session["file"] as string;
+        }
+    
+
+
+
+    <form action="#" method="post">
+        Weet u dat zeker ? id = @Request.QueryString["id"];
+        <input type="submit" value="werwijderen" />
+    </form>
+
+    @if (IsPost)
+    {
+        string id = Request.QueryString["id"];
+        songMth.DeleteSong(id, file);
+
+        Response.Redirect(@"~/index.cshtml");
+    }
+</body>
+</html>
